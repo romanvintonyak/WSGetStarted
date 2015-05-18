@@ -2,6 +2,7 @@ package com.osf.romanvintonyak.WSDummy;
 
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.JAXBException;
 
@@ -29,6 +30,6 @@ public interface Endpoint {
 	 * @exception (@throws javax.xml.bind.JAXBException) 
 	 */
 	@WebMethod 
-	AssessmentCatalogType processXML() throws JAXBException;
+	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery") AssessmentCatalogQueryType query);
 
 }

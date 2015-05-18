@@ -1,12 +1,8 @@
 package com.osf.romanvintonyak.WSDummy;
 
-import java.util.Map;
-
-import javax.annotation.Resource;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.JAXBException;
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
 
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentCatalogType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentCatalogType.CatalogQueryStatus;
@@ -28,10 +24,6 @@ public class EndpointImpl implements Endpoint {
 	 * Error details message
 	 */
 	public static final String PROVIDER_NOT_FOUND = "Provider is not found";
-	
-	// Dependency  Injection
-    @Resource
-    WebServiceContext wsCtx;
 	/**
 	 * Returns a xml structure based on input param
 	 * 
@@ -40,9 +32,8 @@ public class EndpointImpl implements Endpoint {
 	 * @exception (@throws javax.xml.bind.JAXBException) 
 	 */
 	@Override
-	public AssessmentCatalogType processXML() throws JAXBException {
-		AssessmentCatalogQueryType query = new AssessmentCatalogQueryType();
-		System.out.println(wsCtx.getMessageContext().get("xml"));	
+	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery") AssessmentCatalogQueryType query) {
+
 		CatalogDatasourceMock datasource = new CatalogDatasourceMock();
 		AssessmentCatalogType assessmentCatalog = datasource.getData().get(query);
 		if (assessmentCatalog == null) {
