@@ -6,7 +6,7 @@
         <servlet-name>EndpointService</servlet-name>
         <servlet-class>com.osf.romanvintonyak.WSDummy.EndpointImpl</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>EndpointService</servlet-name>
         <url-pattern>/*</url-pattern>
