@@ -32,6 +32,7 @@
 
         <!-- Remote Server URL -->
         <remote.server.url>http://localhost:8080/</remote.server.url>
+        
     </properties>
 
     <dependencyManagement>
@@ -103,7 +104,45 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>${version.wildfly.maven.plugin}</version>
             </plugin>
-        </plugins>
+       
+        <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.0.2.Final</version>
+                <executions>
+                    <execution>
+                        <id>cleanApp</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>undeploy</goal>
+                        </goals>
+                        <configuration>
+                            <ignoreMissingDeployment>true</ignoreMissingDeployment>
+                            <hostname>localhost</hostname>
+                            <username>roman</username>
+                            <password>roman</password>
+                            <!--<port>${wildfly.port}</port>-->
+                            <!--Artifact details-->
+                            <match-pattern>${project.artifactId}.*</match-pattern>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>deploy-app</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                            <hostname>localhost</hostname>
+                            <username>roman</username>
+                            <password>roman</password>
+                            <!--<port>${wildfly.port}</port>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+             </plugins>
     </build>
 
 </project>

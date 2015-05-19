@@ -20,7 +20,7 @@ import javax.jws.soap.SOAPBinding.Style;
  * @version 1.1 Based on Map<AssessmentCatalogQueryType, AssessmentCatalogType> data mock
  */
 @WebService
-@HandlerChain(file="handler.xml")
+@HandlerChain(file="/handler.xml")
 public interface Endpoint {
 	/**
 	 * Returns a xml structure based on input param
@@ -30,6 +30,6 @@ public interface Endpoint {
 	 * @exception (@throws javax.xml.bind.JAXBException) 
 	 */
 	@WebMethod 
-	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery") AssessmentCatalogQueryType query);
+	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") AssessmentCatalogQueryType query);
 
 }

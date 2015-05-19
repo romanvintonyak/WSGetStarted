@@ -5,5 +5,8 @@
 // Generated on: 2015.05.14 at 02:36:11 PM EEST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://ns.hr-xml.org/2007-04-15", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@XmlSchema(namespace = "http://ns.hr-xml.org/2007-04-15", elementFormDefault = XmlNsForm.QUALIFIED)
 package com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery;
+import javax.xml.bind.annotation.XmlSchema;
+import javax.xml.bind.annotation.XmlNsForm;
+

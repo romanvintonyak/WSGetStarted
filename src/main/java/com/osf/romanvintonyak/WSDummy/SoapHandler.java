@@ -32,11 +32,11 @@ public class SoapHandler implements SOAPHandler<SOAPMessageContext> {
 		// if this is an incoming message from the client
 		if (isRequest) {
 			SOAPMessage message = context.getMessage();
-
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			try {
 				message.writeTo(out);
 				String strMsg = new String(out.toByteArray());
+				System.out.println(strMsg);
 				StringReader reader = new StringReader(strMsg);
 				XMLInputFactory xif = XMLInputFactory.newFactory();
 				XMLStreamReader xsr = xif.createXMLStreamReader(reader);
@@ -47,10 +47,10 @@ public class SoapHandler implements SOAPHandler<SOAPMessageContext> {
 				JAXBContext jc = JAXBContext.newInstance(AssessmentCatalogQueryType.class);
 				Unmarshaller unmarshaller = jc.createUnmarshaller();
 				JAXBElement<AssessmentCatalogQueryType> jb = unmarshaller.unmarshal(xsr, AssessmentCatalogQueryType.class);
-				AssessmentCatalogQueryType query = jb.getValue();
+				jb.getValue();
 				xsr.close();
 			} catch (Exception e) {
-				throw new BadXmlException(); 
+				return false;
 			}
 
 		}

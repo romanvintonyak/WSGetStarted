@@ -28,11 +28,10 @@ public class EndpointImpl implements Endpoint {
 	 * Returns a xml structure based on input param
 	 * 
 	 * @param  query input AssessmentCatalogQuery xml 
-	 * @return the AssessmentCatalog output xml
-	 * @exception (@throws javax.xml.bind.JAXBException) 
+	 * @return the AssessmentCatalog output xml 
 	 */
 	@Override
-	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery") AssessmentCatalogQueryType query) {
+	public AssessmentCatalogType processXML(AssessmentCatalogQueryType query) {
 
 		CatalogDatasourceMock datasource = new CatalogDatasourceMock();
 		AssessmentCatalogType assessmentCatalog = datasource.getData().get(query);

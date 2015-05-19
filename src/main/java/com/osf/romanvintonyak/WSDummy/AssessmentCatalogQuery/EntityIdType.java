@@ -275,6 +275,12 @@ public class EntityIdType {
 			return true;
 		}
 
+		@Override
+		public String toString() {
+			return "IdValue [value=" + value + ", name=" + name + "]";
+		}
+		
+
 		
         
         
@@ -306,6 +312,13 @@ public class EntityIdType {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "EntityIdType [idValue=" + idValue + ", validFrom=" + validFrom
+				+ ", validTo=" + validTo + ", idOwner=" + idOwner + "]";
+	}
+
+	
 
 	
     

@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -43,13 +44,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "AssessmentCatalogQueryType", propOrder = {
+
+@XmlType(name = "AssessmentCatalogQuery", namespace="http://ns.hr-xml.org/2007-04-15", propOrder = {
     "clientId",
     "filter",
     "providerId",
     "userArea"
 })
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="AssessmentCatalogQuery", namespace="http://ns.hr-xml.org/2007-04-15")
 public class AssessmentCatalogQueryType {
 
     @XmlElement(name = "ClientId")
@@ -191,8 +194,6 @@ public class AssessmentCatalogQueryType {
 		int result = 1;
 		result = prime * result
 				+ ((clientId == null) ? 0 : clientId.hashCode());
-		result = prime * result
-				+ ((providerId == null) ? 0 : providerId.hashCode());
 		return result;
 	}
 
@@ -210,14 +211,15 @@ public class AssessmentCatalogQueryType {
 				return false;
 		} else if (!clientId.equals(other.clientId))
 			return false;
-		if (providerId == null) {
-			if (other.providerId != null)
-				return false;
-		} else if (!providerId.equals(other.providerId))
-			return false;
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "AssessmentCatalogQueryType [clientId=" + clientId + ", filter="
+				+ filter + ", providerId=" + providerId + ", userArea="
+				+ userArea + ", lang=" + lang + "]";
+	}
 	
     
 
