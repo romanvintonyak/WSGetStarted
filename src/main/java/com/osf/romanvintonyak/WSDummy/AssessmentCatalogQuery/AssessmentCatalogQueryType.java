@@ -45,14 +45,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 
-@XmlType(name = "AssessmentCatalogQuery", namespace="http://ns.hr-xml.org/2007-04-15", propOrder = {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "AssessmentCatalogQueryType", propOrder = {
     "clientId",
     "filter",
     "providerId",
     "userArea"
 })
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="AssessmentCatalogQuery", namespace="http://ns.hr-xml.org/2007-04-15")
 public class AssessmentCatalogQueryType {
 
     @XmlElement(name = "ClientId")
@@ -188,12 +187,16 @@ public class AssessmentCatalogQueryType {
         this.lang = value;
     }
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((clientId == null) ? 0 : clientId.hashCode());
+		result = prime * result
+				+ ((providerId == null) ? 0 : providerId.hashCode());
 		return result;
 	}
 
@@ -210,6 +213,11 @@ public class AssessmentCatalogQueryType {
 			if (other.clientId != null)
 				return false;
 		} else if (!clientId.equals(other.clientId))
+			return false;
+		if (providerId == null) {
+			if (other.providerId != null)
+				return false;
+		} else if (!providerId.equals(other.providerId))
 			return false;
 		return true;
 	}

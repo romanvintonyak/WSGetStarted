@@ -1,7 +1,6 @@
-package com.osf.romanvintonyak.WSDummy;
+package com.osf.romanvintonyak.WSDummy.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.StringReader;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -13,7 +12,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQueryType;
 
-public class Test {
+public class TestMarshallUnmarshall {
 	
 	private static String xml = "<AssessmentCatalogQuery xmlns=\"http://ns.hr-xml.org/2007-04-15\">" 
 			+ "<ClientId>"
@@ -28,7 +27,9 @@ public class Test {
 
 	public static void main(String[] args) throws JAXBException {
 		JAXBContext jc = JAXBContext.newInstance(AssessmentCatalogQueryType.class);
+		
 		AssessmentCatalogQueryType query = unmarshal(xml,jc);
+		System.out.println("==============================");
 		marshal(query, jc);
 		
 		
@@ -39,6 +40,7 @@ public class Test {
 		Source reader = new StreamSource(new ByteArrayInputStream(xml.getBytes()));
 		JAXBElement<AssessmentCatalogQueryType> element = unmarshaller.unmarshal(reader, AssessmentCatalogQueryType.class);
 		AssessmentCatalogQueryType query = element.getValue();
+		System.out.println(query);
 		return query;
 	}
 	

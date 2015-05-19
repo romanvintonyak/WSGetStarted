@@ -3,14 +3,11 @@ package com.osf.romanvintonyak.WSDummy;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.xml.bind.JAXBException;
 
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentCatalogType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQueryType;
-
-import javax.jws.soap.SOAPBinding;
-import javax.jws.soap.SOAPBinding.Style;
  
 /**
  * A simple Web Service which receive a xml on input
@@ -29,7 +26,8 @@ public interface Endpoint {
 	 * @return the AssessmentCatalog output xml
 	 * @exception (@throws javax.xml.bind.JAXBException) 
 	 */
-	@WebMethod 
+	@WebMethod
+	@WebResult(name="AssessmentCatalog", targetNamespace="http://ns.hr-xml.org/2007-04-15")
 	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") AssessmentCatalogQueryType query);
 
 }

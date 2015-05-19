@@ -10,7 +10,7 @@ Terms of license can be found in license.txt.
 		<xsd:documentation>After merging all includes, the result is passed through a stylesheet which deletes any duplicative global components as well as any unused global types.  Finally, it sorts by component name.  Be sure to check the Xml Namespaces to ensure this result is what you requested.</xsd:documentation>
 	</xsd:annotation>
 	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
-	<xsd:element name="AssessmentCatalogQuery" type="AssessmentCatalogQueryType">
+	<xsd:element name="AssessmentCatalogQuery" type="AssessmentCatalogQuery">
 		<xsd:annotation>
 			<xsd:documentation>Root element for the query of an assessment vendor's catalog of assessment packages.</xsd:documentation>
 		</xsd:annotation>
@@ -74,13 +74,13 @@ Terms of license can be found in license.txt.
 			<xsd:pattern value="\d\d:\d\d:\d\d(Z|(\+|-)\d\d:\d\d)"/>
 		</xsd:restriction>
 	</xsd:simpleType>
-	<xsd:complexType name="AssessmentCatalogQueryType">
+	<xsd:complexType name="AssessmentCatalogQuery">
 		<xsd:annotation>
 			<xsd:documentation>Root element for AssessmentCatalogQuery</xsd:documentation>
 		</xsd:annotation>
 		<xsd:sequence>
 			<xsd:element name="ClientId" type="EntityIdType" minOccurs="0"/>
-			<xsd:element name="Filter" type="FilterType">
+			<xsd:element name="Filter" type="FilterType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Used to restrict the AssessmentPackages included in a catalog.</xsd:documentation>
 				</xsd:annotation>
