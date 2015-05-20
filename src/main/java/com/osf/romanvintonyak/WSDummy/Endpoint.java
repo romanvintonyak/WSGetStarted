@@ -17,7 +17,7 @@ import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQu
  * @version 1.1 Based on Map<AssessmentCatalogQueryType, AssessmentCatalogType> data mock
  */
 @WebService
-@HandlerChain(file="/handler.xml")
+
 public interface Endpoint {
 	/**
 	 * Returns a xml structure based on input param
@@ -28,6 +28,6 @@ public interface Endpoint {
 	 */
 	@WebMethod
 	@WebResult(name="AssessmentCatalog", targetNamespace="http://ns.hr-xml.org/2007-04-15")
-	public AssessmentCatalogType processXML(@WebParam(name="AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") AssessmentCatalogQueryType query);
+	AssessmentCatalogType processXML(@WebParam(name = "AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") AssessmentCatalogQueryType query);
 
 }
