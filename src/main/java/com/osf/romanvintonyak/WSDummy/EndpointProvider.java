@@ -3,15 +3,12 @@ package com.osf.romanvintonyak.WSDummy;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentCatalogType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQueryType;
 import com.osf.romanvintonyak.WSDummy.Exception.InvalidDataException;
-import org.jboss.ws.api.annotation.EndpointConfig;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.jws.soap.SOAPBinding;
 import javax.xml.XMLConstants;
 import javax.xml.bind.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -22,11 +19,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import javax.xml.ws.*;
-import javax.xml.ws.handler.MessageContext;
-import java.util.List;
-import java.util.Map;
+import javax.xml.ws.Provider;
+import javax.xml.ws.WebServiceProvider;
+
 @WebServiceProvider(serviceName = "EndpointProviderService")
+@HandlerChain(file = "/handler.xml")
 public class EndpointProvider implements Provider<Source> {
     private static final String PROVIDER_NOT_FOUND = "Provider was not found";
     private static final String schemaName = "/AssessmentCatalogQuery.xsd";
