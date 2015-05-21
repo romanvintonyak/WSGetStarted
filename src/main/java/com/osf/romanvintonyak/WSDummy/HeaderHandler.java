@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by roman on 21.05.2015.
+ * The handler adds security section to the header
  */
 public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
     @Override
@@ -27,11 +27,12 @@ public class HeaderHandler implements SOAPHandler<SOAPMessageContext> {
 
     @Override
     public boolean handleFault(SOAPMessageContext context) {
-        return true;
+       return true;
     }
 
     @Override
     public void close(MessageContext context) {
 
     }
+
 }

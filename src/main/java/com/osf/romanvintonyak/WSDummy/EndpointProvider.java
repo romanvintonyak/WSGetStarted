@@ -2,10 +2,13 @@ package com.osf.romanvintonyak.WSDummy;
 
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentCatalogType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQueryType;
-import com.osf.romanvintonyak.WSDummy.Exception.InvalidDataException;
+import com.osf.romanvintonyak.WSDummy.Entities.User;
+import com.osf.romanvintonyak.WSDummy.Services.AuthorizationService;
+import com.osf.romanvintonyak.WSDummy.dao.UserDao;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import javax.annotation.Resource;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -20,28 +23,41 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.ws.Provider;
+import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceProvider;
 
 @WebServiceProvider(serviceName = "EndpointProviderService")
 @HandlerChain(file = "/handler.xml")
 public class EndpointProvider implements Provider<Source> {
+
     private static final String PROVIDER_NOT_FOUND = "Provider was not found";
-    private static final String schemaName = "/AssessmentCatalogQuery.xsd";
+    private static final String SCHEMA_NAME = "/AssessmentCatalogQuery.xsd";
+    private static final String INVALID_CREDENTIALS = "Invalid user credentials";
+    private static final String INVALID_DATA = "Your data is not valid!";
+
+    @Resource
+    private WebServiceContext context;
 
     @Override
     @WebMethod
     public Source invoke(@WebParam(name = "AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") Source input) {
-
+        UserDao userDao = new UserDao();
+        System.out.println(userDao.findById(1));
+        AuthorizationService authorizationService = new AuthorizationService();
+        User user = authorizationService.getGetUserFromHeader(context);
+        if (!authorizationService.isAuthorized(user)) {
+            throw new RuntimeException(INVALID_CREDENTIALS);
+        }
         Source output;
         try {
             AssessmentCatalogType assessmentCatalog = unmarshallerQuery(input);
             if (assessmentCatalog == null) {
-                throw new InvalidDataException(PROVIDER_NOT_FOUND);
+                throw new RuntimeException(PROVIDER_NOT_FOUND);
             }
             output = marshallerCatalog(assessmentCatalog);
-        } catch (JAXBException | ParserConfigurationException | SAXException   e) {
+        } catch (JAXBException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();//TODO Logging
-            throw new InvalidDataException("Your data is not valid!",e);
+            throw new RuntimeException(INVALID_DATA);
         }
         return output;
     }
@@ -70,9 +86,10 @@ public class EndpointProvider implements Provider<Source> {
         return datasourceMock.getData().get(catalogQuery);
     }
 
+
     private Schema getSchema() throws SAXException {
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        StreamSource streamSource = new StreamSource(getClass().getResourceAsStream(schemaName));
+        StreamSource streamSource = new StreamSource(getClass().getResourceAsStream(SCHEMA_NAME));
         return sf.newSchema(streamSource);
     }
 
