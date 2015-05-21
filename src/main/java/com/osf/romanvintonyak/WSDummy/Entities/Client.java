@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * Created by Roman on 21.05.2015.
  */
-
+@Entity
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

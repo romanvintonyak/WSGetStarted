@@ -1,16 +1,18 @@
 package com.osf.romanvintonyak.WSDummy.Entities;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 /**
  * Created by Roman on 21.05.2015.
  */
+@Entity
 public class Test {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String displayName;
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client = new Client();
 

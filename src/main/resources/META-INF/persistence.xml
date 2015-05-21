@@ -6,9 +6,9 @@
              version="2.1">
     <persistence-unit name="primary">
         <jta-data-source>java:jboss/jdbc/WSDataSource</jta-data-source>
-       <!-- <class>com.osf.romanvintonyak.WSDummy.Entities.Test</class>-->
+        <class>com.osf.romanvintonyak.WSDummy.Entities.Test</class>
         <class>com.osf.romanvintonyak.WSDummy.Entities.User</class>
-       <!-- <class>com.osf.romanvintonyak.WSDummy.Entities.Client</class>-->
+        <class>com.osf.romanvintonyak.WSDummy.Entities.Client</class>
         <properties>
             <property name="javax.persistence.schemageneration.database.action" value="drop-and-create"/>
         </properties>
