@@ -2,8 +2,10 @@ package com.osf.romanvintonyak.WSDummy;
 
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentCatalogType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQueryType;
+import com.osf.romanvintonyak.WSDummy.Entities.Client;
 import com.osf.romanvintonyak.WSDummy.Entities.User;
 import com.osf.romanvintonyak.WSDummy.Services.AuthorizationService;
+import com.osf.romanvintonyak.WSDummy.dao.ClientDao;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -37,12 +39,17 @@ public class EndpointProvider implements Provider<Source> {
 
     @Resource
     private WebServiceContext context;
+    @EJB
+    ClientDao clientDao;
 
     @EJB
     AuthorizationService authorizationService;
+
+
     @Override
     @WebMethod
     public Source invoke(@WebParam(name = "AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") Source input) {
+        clientDao.fillTestData();
         User user = authorizationService.getGetUserFromHeader(context);
         if (user == null || !authorizationService.isAuthorized(user)) {
             throw new RuntimeException(INVALID_CREDENTIALS);

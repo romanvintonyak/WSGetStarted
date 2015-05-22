@@ -8,12 +8,20 @@ import java.util.Set;
  * Created by Roman on 21.05.2015.
  */
 @Entity
+@Table
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @OneToMany(mappedBy = "client")
-    private Set<Test> tests = new HashSet<>();
+
+    @OneToMany(mappedBy = "client",cascade = CascadeType.PERSIST)
+    private Set<Test> tests;
+
+    public Client() {}
+
+    public Client(long id, Set<Test> tests) {
+        this.id = id;
+        this.tests = tests;
+    }
 
     public long getId() {
         return id;

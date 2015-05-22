@@ -17,7 +17,6 @@ public class UserDao {
     private EntityManager em;
 
     public boolean checkUser(User user) {
-        System.out.println(user);
         Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password =:password");
         query.setParameter("username",user.getUsername());
         query.setParameter("password",user.getPassword());
