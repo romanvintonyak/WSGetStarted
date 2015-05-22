@@ -5,7 +5,10 @@ package com.osf.romanvintonyak.WSDummy.Services;
  */
 
 import com.osf.romanvintonyak.WSDummy.Entities.User;
+import com.osf.romanvintonyak.WSDummy.dao.UserDao;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.ArrayList;
@@ -13,11 +16,16 @@ import java.util.Map;
 
 import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
 
+@Stateless
 public class AuthorizationService {
 
-    private static final String AUTHORIZATION = "Authorization";;
+    private static final String AUTHORIZATION = "Authorization";
     private static final String AUTHORIZATION_TYPE = "Basic";
     private static final String DELIMITER = ":";
+
+    @EJB
+    UserDao userDao;
+
 
     public User getGetUserFromHeader(WebServiceContext context) {
         MessageContext mctx = context.getMessageContext();
@@ -37,16 +45,14 @@ public class AuthorizationService {
 
             String username = credentialsArray[0];
             String password = credentialsArray[1];
-            return new User(username,password);
+            return new User(username, password);
         }
         return null;
     }
 
-    public boolean isAuthorized(User user){
-        User mockUser = new User("admin", "admin");
-        return mockUser.equals(user);
+    public boolean isAuthorized(User user) {
+        return userDao.checkUser(user);
     }
-
 
 
 }
