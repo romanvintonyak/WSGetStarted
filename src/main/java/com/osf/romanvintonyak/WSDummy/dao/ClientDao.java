@@ -32,20 +32,19 @@ public class ClientDao {
 
     public void fillTestData() {
         Test test1 = new Test("first demo test");
-       /* Test test2 = new Test("second demo test");
+        Test test2 = new Test("second demo test");
         Test test3 = new Test("third demo test");
-*/
-        List<Test> tests = new ArrayList<>();
-        tests.add(test1);
-        //tests.add(test2);
-        Set<Test> testSet = new HashSet<>(tests);
+        Set<Test> testSet = new HashSet<>();
+        testSet.add(test1);
+        testSet.add(test2);
+        testSet.add(test3);
 
-        Client client1 = new Client(20148,testSet);
-        Client client2 = new Client(21148,testSet);
-        Client client3 = new Client(22148,testSet);
+        Client client1 = new Client(20148, testSet);
+        Client client2 = new Client(21148, testSet);
+        Client client3 = new Client(22148, testSet);
 
         saveClient(client1);
-        /*saveClient(client2);
-        saveClient(client3);*/
+        saveClient(client2);
+        saveClient(client3);
     }
 }

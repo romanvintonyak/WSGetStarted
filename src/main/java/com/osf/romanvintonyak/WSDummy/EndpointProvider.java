@@ -50,10 +50,10 @@ public class EndpointProvider implements Provider<Source> {
     @WebMethod
     public Source invoke(@WebParam(name = "AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") Source input) {
         clientDao.fillTestData();
-        User user = authorizationService.getGetUserFromHeader(context);
-        if (user == null || !authorizationService.isAuthorized(user)) {
-            throw new RuntimeException(INVALID_CREDENTIALS);
-        }
+//        User user = authorizationService.getGetUserFromHeader(context);
+//        if (user == null || !authorizationService.isAuthorized(user)) {
+//            throw new RuntimeException(INVALID_CREDENTIALS);
+//        }
         Source output;
         try {
             AssessmentCatalogType assessmentCatalog = unmarshallerQuery(input);
