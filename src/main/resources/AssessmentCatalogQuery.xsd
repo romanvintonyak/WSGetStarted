@@ -10,7 +10,7 @@ Terms of license can be found in license.txt.
 		<xsd:documentation>Stand alone (but non-normative) version of schema, with all "includes" inserted explicitly.  This file is auto-generated.  It should be considered a "convenience" alternative to the normative versions.</xsd:documentation>
 		<xsd:documentation>After merging all includes, the result is passed through a stylesheet which deletes any duplicative global components as well as any unused global types.  Finally, it sorts by component name.  Be sure to check the Xml Namespaces to ensure this result is what you requested.</xsd:documentation>
 	</xsd:annotation>
-	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2009/01/xml.xsd"/>
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
 	<xsd:element name="AssessmentCatalogQuery" type="AssessmentCatalogQuery">
 		<xsd:annotation>
 			<xsd:documentation>Root element for the query of an assessment vendor's catalog of assessment packages.</xsd:documentation>

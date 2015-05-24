@@ -1,4 +1,4 @@
-package com.osf.romanvintonyak.WSDummy.Services;
+package com.osf.romanvintonyak.WSDummy.services;
 
 import org.apache.commons.codec.binary.Base64;
 

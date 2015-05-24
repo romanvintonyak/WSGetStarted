@@ -1,7 +1,6 @@
-package com.osf.romanvintonyak.WSDummy.Entities;
+package com.osf.romanvintonyak.WSDummy.entities;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,10 +12,11 @@ public class Client {
     @Id
     private long id;
 
-    @OneToMany(mappedBy = "client",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Test> tests;
 
-    public Client() {}
+    public Client() {
+    }
 
     public Client(long id, Set<Test> tests) {
         this.id = id;

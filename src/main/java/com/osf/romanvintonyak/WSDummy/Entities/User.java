@@ -1,4 +1,4 @@
-package com.osf.romanvintonyak.WSDummy.Entities;
+package com.osf.romanvintonyak.WSDummy.entities;
 
 import javax.persistence.*;
 

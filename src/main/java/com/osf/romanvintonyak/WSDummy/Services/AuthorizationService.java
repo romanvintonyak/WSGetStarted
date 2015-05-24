@@ -1,10 +1,10 @@
-package com.osf.romanvintonyak.WSDummy.Services;
+package com.osf.romanvintonyak.WSDummy.services;
 
 /**
  * Created by Roman on 21.05.2015.
  */
 
-import com.osf.romanvintonyak.WSDummy.Entities.User;
+import com.osf.romanvintonyak.WSDummy.entities.User;
 import com.osf.romanvintonyak.WSDummy.dao.UserDao;
 
 import javax.ejb.EJB;
@@ -24,7 +24,7 @@ public class AuthorizationService {
     private static final String DELIMITER = ":";
 
     @EJB
-    UserDao userDao;
+    private UserDao userDao;
 
 
     public User getGetUserFromHeader(WebServiceContext context) {

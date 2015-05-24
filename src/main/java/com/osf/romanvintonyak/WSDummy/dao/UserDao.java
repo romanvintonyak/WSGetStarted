@@ -1,6 +1,6 @@
 package com.osf.romanvintonyak.WSDummy.dao;
 
-import com.osf.romanvintonyak.WSDummy.Entities.User;
+import com.osf.romanvintonyak.WSDummy.entities.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,13 +13,13 @@ import javax.persistence.Query;
 @Stateless
 public class UserDao {
 
-    @PersistenceContext(name = "datasource")
+    @PersistenceContext
     private EntityManager em;
 
     public boolean checkUser(User user) {
-        Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password =:password");
-        query.setParameter("username",user.getUsername());
-        query.setParameter("password",user.getPassword());
-        return query.getResultList().size()>0;
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username and u.password = :password");
+        query.setParameter("username", user.getUsername());
+        query.setParameter("password", user.getPassword());
+        return query.getResultList().size() > 0;
     }
 }

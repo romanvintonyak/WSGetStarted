@@ -1,4 +1,4 @@
-package com.osf.romanvintonyak.WSDummy.Test;
+package com.osf.romanvintonyak.WSDummy.test;
 
 import java.io.ByteArrayInputStream;
 
