@@ -5,11 +5,11 @@ import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.AssessmentPackageType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.EntityIdType;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalog.EntityIdType.IdValue;
 import com.osf.romanvintonyak.WSDummy.AssessmentCatalogQuery.AssessmentCatalogQueryType;
+import com.osf.romanvintonyak.WSDummy.dao.ClientDao;
 import com.osf.romanvintonyak.WSDummy.entities.Client;
 import com.osf.romanvintonyak.WSDummy.entities.Test;
 import com.osf.romanvintonyak.WSDummy.entities.User;
 import com.osf.romanvintonyak.WSDummy.services.AuthorizationService;
-import com.osf.romanvintonyak.WSDummy.dao.ClientDao;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -44,6 +44,7 @@ public class EndpointProvider implements Provider<Source> {
     private static final String SCHEMA_NAME = "/AssessmentCatalogQuery.xsd";
     private static final String INVALID_CREDENTIALS = "Invalid user credentials";
     private static final String INVALID_DATA = "Your data is not valid!";
+
     @Resource
     private WebServiceContext context;
     @EJB
@@ -56,18 +57,24 @@ public class EndpointProvider implements Provider<Source> {
     @Override
     @WebMethod
     public Source invoke(@WebParam(name = "AssessmentCatalogQuery", targetNamespace = "http://ns.hr-xml.org/2007-04-15") Source input) {
-        // clientDao.fillTestData();
+        //clientDao.initTestData();
         User user = authorizationService.getGetUserFromHeader(context);
         if (user == null || !authorizationService.isAuthorized(user)) {
             throw new RuntimeException(INVALID_CREDENTIALS);
         }
         Source output;
         try {
-            AssessmentCatalogType assessmentCatalog = unmarshallerQuery(input);
-            if (assessmentCatalog == null) {
+            //Try to get the input query
+            AssessmentCatalogQueryType query = convertSourceToQuery(input);
+            long queryId = Long.parseLong(query.getClientId().getIdValue().get(0).getValue());
+            Client client = clientDao.getById(queryId);
+            //Reply with error message
+            if (client == null) {
                 throw new RuntimeException(PROVIDER_NOT_FOUND);
             }
-            output = marshallerCatalog(assessmentCatalog);
+            //build AssessmentCatalogType from Query and Client
+            AssessmentCatalogType assessmentCatalog = buildCatalogFromQueryAndClient(query, client);
+            output = convertCatalogToSource(assessmentCatalog);
         } catch (JAXBException | ParserConfigurationException | SAXException e) {
             e.printStackTrace();//TODO Logging
             throw new RuntimeException(INVALID_DATA);
@@ -75,8 +82,7 @@ public class EndpointProvider implements Provider<Source> {
         return output;
     }
 
-    private Source marshallerCatalog(AssessmentCatalogType assessmentCatalogType) throws JAXBException, ParserConfigurationException {
-
+    private Source convertCatalogToSource(AssessmentCatalogType assessmentCatalogType) throws JAXBException, ParserConfigurationException {
         JAXBContext jaxbContext = JAXBContext.newInstance(AssessmentCatalogType.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         // Create the Document
@@ -88,21 +94,13 @@ public class EndpointProvider implements Provider<Source> {
     }
 
 
-    private AssessmentCatalogType unmarshallerQuery(Source source) throws JAXBException, SAXException {
+    private AssessmentCatalogQueryType convertSourceToQuery(Source source) throws JAXBException, SAXException {
         JAXBContext jaxbContext = JAXBContext.newInstance(AssessmentCatalogQueryType.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         Schema schema = getSchema();
         unmarshaller.setSchema(schema);
         JAXBElement<AssessmentCatalogQueryType> jb = unmarshaller.unmarshal(source, AssessmentCatalogQueryType.class);
-        AssessmentCatalogQueryType catalogQuery = jb.getValue();
-        long queryId = Long.parseLong(catalogQuery.getClientId().getIdValue().get(0).getValue());
-        Client client = clientDao.getById(queryId);
-        AssessmentCatalogType catalog = null;
-        if (client != null) {
-            catalog = new AssessmentCatalogType();
-            prepareCatalog(catalogQuery, client, catalog);
-        }
-        return catalog;
+        return jb.getValue();
     }
 
 
@@ -112,7 +110,6 @@ public class EndpointProvider implements Provider<Source> {
         schemas.add(new StreamSource(getClass().getResourceAsStream(SCHEMA_NAME)));
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = sf.newSchema(schemas.toArray(new Source[schemas.size()]));
-
         return schema;
     }
 
@@ -122,7 +119,8 @@ public class EndpointProvider implements Provider<Source> {
         return db.newDocument();
     }
 
-    private void prepareCatalog(AssessmentCatalogQueryType query, Client client, AssessmentCatalogType catalog) {
+    private AssessmentCatalogType buildCatalogFromQueryAndClient(AssessmentCatalogQueryType query, Client client) {
+        AssessmentCatalogType catalog = new AssessmentCatalogType();
         String providerValue = query.getProviderId().getIdValue().get(0).getValue();
         catalog.setProviderId(new EntityIdType());
         catalog.getProviderId().getIdValue().add(new IdValue(providerValue));
@@ -134,6 +132,7 @@ public class EndpointProvider implements Provider<Source> {
             assessmentPackage.setName(test.getName());
             catalog.getAssessmentPackage().add(assessmentPackage);
         }
+        return catalog;
     }
 
 

@@ -21,7 +21,7 @@ public class ClientDao {
         return em.find(Client.class, id);
     }
 
-    public void fillTestData() {
+    public void initTestData() {
         Test test1 = new Test("first demo test");
         Test test2 = new Test("second demo test");
         Test test3 = new Test("third demo test");
